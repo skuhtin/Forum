@@ -21,20 +21,20 @@ public class CommentsDao {
     }
   }
 
-  public void insertComment(int idTopic, String line)  {
+  public void insertComment(int idTopic, String comment)  {
     try {
       Connection connection = getConnection();
-      handleInsert(connection, idTopic, line);
+      handleInsert(connection, idTopic, comment);
       connection.close();
     } catch (SQLException e) {
       throw new RuntimeException(e);
     }
   }
 
-  private void handleInsert(Connection connection, int id, String line) throws SQLException {
+  private void handleInsert(Connection connection, int idTopic, String comment) throws SQLException {
     PreparedStatement statement = connection.prepareStatement("INSERT INTO comments (TOPIC_ID, TEXT) VALUES (?,?)");
-    statement.setInt(1, id);
-    statement.setString(2, line);
+    statement.setInt(1, idTopic);
+    statement.setString(2, comment);
     statement.execute();
   }
 
