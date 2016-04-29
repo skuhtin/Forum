@@ -1,0 +1,25 @@
+<web-app>
+    <servlet>
+        <servlet-name>forum</servlet-name>
+        <servlet-class>forum.servlet.TopicsServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>forum</servlet-name>
+        <url-pattern>/forum</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>comment</servlet-name>
+        <servlet-class>forum.servlet.CommentsServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>comment</servlet-name>
+        <url-pattern>/forum/*</url-pattern>
+    </servlet-mapping>
+
+
+
+
+</web-app>
