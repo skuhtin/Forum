@@ -1,0 +1,9 @@
+Table:  topics
+
++-------------+---------------+------+-----+---------+----------------+
+| Field       | Type          | Null | Key | Default | Extra          |
++-------------+---------------+------+-----+---------+----------------+
+| id          | mediumint(9)  | NO   | PRI | NULL    | auto_increment |
+| HeadOfTopic | varchar(120)  | NO   |     | NULL    |                |
+| TextOfTopic | varchar(1200) | YES  |     | NULL    |                |
++-------------+---------------+------+-----+---------+----------------+
