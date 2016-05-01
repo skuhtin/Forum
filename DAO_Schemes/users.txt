@@ -1,0 +1,11 @@
+Table: users
+
++----------+--------------+------+-----+---------+----------------+
+| Field    | Type         | Null | Key | Default | Extra          |
++----------+--------------+------+-----+---------+----------------+
+| id       | mediumint(9) | NO   | PRI | NULL    | auto_increment |
+| login    | varchar(20)  | NO   |     | NULL    |                |
+| password | varchar(20)  | NO   |     | NULL    |                |
+| ban      | tinyint(1)   | YES  |     | 0       |                |
+| admin    | tinyint(1)   | YES  |     | 0       |                |
++----------+--------------+------+-----+---------+----------------+
