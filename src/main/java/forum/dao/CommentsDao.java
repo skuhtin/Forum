@@ -7,20 +7,6 @@ import java.util.List;
 
 public class CommentsDao {
 
-  public static void main(String[] args) {
-    CommentsDao commentsDao = new CommentsDao();
-    int idTopic = 1;
-    String comment1 = "comment1";
-    String comment2 = "comment2";
-    commentsDao.insertComment(idTopic, comment1);
-    commentsDao.insertComment(idTopic, comment2);
-    List<String> comments = commentsDao.loadComment(1);
-    System.out.println(comments.size());
-    for (String out : comments) {
-      System.out.println(out);
-    }
-  }
-
   public void insertComment(int idTopic, String comment)  {
     try {
       Connection connection = getConnection();
@@ -36,6 +22,7 @@ public class CommentsDao {
     statement.setInt(1, idTopic);
     statement.setString(2, comment);
     statement.execute();
+    connection.close();
   }
 
   public List<String> loadComment(int idTopic) {
@@ -58,8 +45,6 @@ public class CommentsDao {
       result.add(comment);
     }
     connection.close();
-    statement.close();
-    resultSet.close();
     return result;
   }
 

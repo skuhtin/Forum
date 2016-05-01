@@ -3,8 +3,9 @@ package forum.dao;
 import forum.model.User;
 
 import java.sql.*;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class UsersDao {
 
@@ -12,34 +13,54 @@ public class UsersDao {
    // User user = new User("login", "password");
     UsersDao usersDao = new UsersDao();
     //usersDao.insertUser(user);
-    Map<Integer, User> users = usersDao.loadUsers();
-    for (Map.Entry<Integer,User> out : users.entrySet()) {
-      User user = out.getValue();
-      System.out.println(out.getKey() + " " + user.getLogin() + " " + user.getPassword() + " " + user.isBan() + " " + user.isAdmin() );
+    List<User> users = usersDao.loadUsers();
+    for (User user : users) {
+      System.out.println(user.getId() + " " + user.getLogin() + " " + user.getPassword() + " " + user.isBan() + " " + user.isAdmin() );
+    }
+  }
+  public boolean userIsAbsent(String login, String password) {
+    List <User> users = loadUsers();
+    for (User user : users) {
+      if (user.getLogin().equals(login) & user.getPassword().equals(password)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  public List<User> loadUsers() {
+    Connection connection = getConnection();
+    try {
+      List<User> users = handleUsers(connection);
+      connection.close();
+      return users;
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
     }
   }
 
-  public Map<Integer, User> loadUsers() throws SQLException{
-    Connection connection = getConnection();
+  private List<User> handleUsers(Connection connection) throws SQLException {
     Statement statement = connection.createStatement();
     ResultSet resultSet = statement.executeQuery("SELECT * FROM users");
-    Map<Integer, User> users = new HashMap<Integer, User>();
+    List<User> users = new ArrayList<User>();
     while (resultSet.next()) {
       getUsers(resultSet, users);
     }
+    connection.close();
     return  users;
   }
 
-  private void getUsers(ResultSet resultSet, Map<Integer, User> users) throws SQLException {
-    int idUser = resultSet.getInt("id");
+  private void getUsers(ResultSet resultSet, List<User> users) throws SQLException {
     String login = resultSet.getString("login");
     String passw = resultSet.getString("password");
     User user = new User(login,passw);
     boolean banInfo = resultSet.getBoolean("ban");
     boolean adminInfo = resultSet.getBoolean("admin");
+    int idUser = resultSet.getInt("id");
+    user.setId(idUser);
     user.setBan(banInfo);
     user.setAdmin(adminInfo);
-    users.put(idUser, user);
+    users.add(user);
   }
 
   public void insertUser(User user) throws SQLException{
@@ -48,6 +69,7 @@ public class UsersDao {
     statement.setString(1, user.getLogin());
     statement.setString(2, user.getPassword());
     statement.execute();
+    connection.close();
 
   }
 
