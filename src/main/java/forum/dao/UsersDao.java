@@ -28,6 +28,16 @@ public class UsersDao {
     return true;
   }
 
+  public boolean sameLogin(String login) {
+    List<User> users = loadUsers();
+    for (User user : users) {
+      if (user.getLogin().equals(login)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   public List<User> loadUsers() {
     Connection connection = getConnection();
     try {
@@ -63,14 +73,22 @@ public class UsersDao {
     users.add(user);
   }
 
-  public void insertUser(User user) throws SQLException{
-    Connection connection = getConnection();
+  public void insertUser(User user) {
+    try {
+      Connection connection = getConnection();
+      handleInsert(user, connection);
+      connection.close();
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  private void handleInsert(User user, Connection connection) throws SQLException {
     PreparedStatement statement = connection.prepareStatement("INSERT INTO users (login, password) VALUES (?,?)");
     statement.setString(1, user.getLogin());
     statement.setString(2, user.getPassword());
     statement.execute();
     connection.close();
-
   }
 
   private Connection getConnection() {

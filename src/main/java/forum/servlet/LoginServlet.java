@@ -45,7 +45,7 @@ public class LoginServlet extends HttpServlet{
     out.print("<h1>Welcome to our forum!</h1>");
     out.print("<form action=\"/login\" method=\"POST\">");
     out.print("Login:<input type=\"text\" name=\"login\">");
-    out.print("<p> Psswd: <input type=\"password\" name=\"password\"><br>");
+    out.print("<p> Pswd: <input type=\"password\" name=\"password\"><br>");
     out.print("<p><input type=\"submit\" name=\"enter\" value=\"Enter\">");
     out.print("</form>");
     out.print("<h3>Registration form here: </h3>");
