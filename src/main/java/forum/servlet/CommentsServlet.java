@@ -2,6 +2,7 @@ package forum.servlet;
 
 import forum.dao.CommentsDao;
 import forum.dao.TopicDao;
+import forum.model.Comment;
 import forum.model.Topic;
 
 import javax.servlet.ServletException;
@@ -35,8 +36,9 @@ public class CommentsServlet extends HttpServlet {
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     String text = req.getParameter("comment");
     int id = getId(req);
-
-    commentsDao.insertComment(id, text);
+    Cookie[] cookies = req.getCookies();
+    String userName = cookies[1].getValue();
+    commentsDao.insertComment(id, new Comment(text, userName));
     viewCommentsPage(req, resp, id);
   }
 
@@ -45,7 +47,7 @@ public class CommentsServlet extends HttpServlet {
     try {
       String userName = cookies[1].getValue();
       Map<Integer, Topic> topics = topicDao.loadTopic();
-      List<String> comments = commentsDao.loadComment(id);
+      List<Comment> comments = commentsDao.loadComment(id);
       Topic topic = topics.get(id);
       PrintWriter out = resp.getWriter();
       out.println("<html><body>");
@@ -57,8 +59,9 @@ public class CommentsServlet extends HttpServlet {
       out.println("<p><input type=\"submit\" value=\"Back\">");
       out.print("</form>");
       out.print("<p><b>Comments:</b><br>");
-      for (String outComment : comments) {
-        out.print("<p>" + outComment);
+      for (Comment comment : comments) {
+        out.print("<p><b>" + comment.getUserHandler() + " said:</b><br>");
+        out.print(comment.getText());
       }
       out.print("<form action=\"/forum/" + id + "\" method=\"post\">");
       out.print("<p><b>Add your comment</b><br>");

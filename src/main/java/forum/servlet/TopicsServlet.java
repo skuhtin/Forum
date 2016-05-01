@@ -2,6 +2,7 @@ package forum.servlet;
 
 import forum.dao.TopicDao;
 import forum.model.Topic;
+import forum.model.User;
 
 import java.io.*;
 import java.util.Map;
@@ -34,7 +35,7 @@ public class TopicsServlet extends HttpServlet{
         Topic topic = print.getValue();
         int id = print.getKey();
         out.print("<li>");
-        out.print("<a href='/forum/" + id + "'>" + topic.getHead() + "</a>");
+        out.print("<b><a href='/forum/" + id + "'>" + topic.getHead() + "</a></b>" + " added by " + topic.getHandleUser());
         out.print("</li>");
       }
       out.print("</ul>");
@@ -58,7 +59,10 @@ public class TopicsServlet extends HttpServlet{
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     String newHeadOfTopic = req.getParameter("head");
     String newBodyOfTopic = req.getParameter("comment");
-    topicDao.insertTopic(new Topic(newHeadOfTopic, newBodyOfTopic));
+    Cookie[] cookies = req.getCookies();
+    String userName = cookies[1].getValue();
+    Topic topic = new Topic(newHeadOfTopic, newBodyOfTopic, userName);
+    topicDao.insertTopic(topic);
     Map<Integer, Topic> topics = topicDao.loadTopic();
 
     viewTopicPage(req, resp, topics);

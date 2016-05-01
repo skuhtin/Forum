@@ -19,9 +19,10 @@ public class TopicDao {
   }
 
   private void handleInsert(Connection connection, Topic topic) throws SQLException {
-    PreparedStatement statement = connection.prepareStatement("INSERT INTO topics (HeadOfTopic, TextOfTopic) VALUES (?,?)");
+    PreparedStatement statement = connection.prepareStatement("INSERT INTO topics (HeadOfTopic, TextOfTopic, userName) VALUES (?,?,?)");
     statement.setString(1, topic.getHead());
     statement.setString(2, topic.getText());
+    statement.setString(3, topic.getHandleUser());
     statement.execute();
   }
 
@@ -44,7 +45,8 @@ public class TopicDao {
       int id = resultSet.getInt(1);
       String head = resultSet.getString(2);
       String body = resultSet.getString(3);
-      result.put(id, new Topic(head,body));
+      String userName = resultSet.getString(4);
+      result.put(id, new Topic(head,body,userName));
     }
     connection.close();
     return result;
