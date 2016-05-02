@@ -35,4 +35,14 @@
         <url-pattern>/ban</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>message</servlet-name>
+        <servlet-class>forum.servlet.SendMessageServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>message</servlet-name>
+        <url-pattern>/message/*</url-pattern>
+    </servlet-mapping>
+
+
 </web-app>

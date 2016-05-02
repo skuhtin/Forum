@@ -60,19 +60,24 @@ public class CommentsServlet extends HttpServlet {
       out.print("</form>");
       out.print("<p><b>Comments:</b><br>");
       for (Comment comment : comments) {
-        out.print("<p><b>" + comment.getUserHandler() + " said:</b><br>");
+        out.print("<p><b>" + comment.getUserHandler() + " said:</b>");
+        out.print("(" + "<a href='/message/" + id + "/" + comment.getUserHandler() + "'>Send msg</a>" + ")<br>");
         out.print(comment.getText());
       }
-      out.print("<form action=\"/forum/" + id + "\" method=\"post\">");
-      out.print("<p><b>Add your comment</b><br>");
-      out.print("<textarea name=\"comment\" cols=\"40\" rows=\"3\"></textarea></p>");
-      out.print("<p><input type=\"submit\" value=\"Send\">");
-      out.print("<input type=\"reset\" value=\"Cancel\"></p>");
-      out.print("</form></body></html>");
+      sendComment(id, out);
 
       out.close();
     }catch(ArrayIndexOutOfBoundsException e) {
       resp.sendRedirect("/login");
     }
+  }
+
+  private void sendComment(int id, PrintWriter out) {
+    out.print("<form action=\"/forum/" + id + "\" method=\"post\">");
+    out.print("<p><b>Add your comment</b><br>");
+    out.print("<textarea name=\"comment\" cols=\"40\" rows=\"3\"></textarea></p>");
+    out.print("<p><input type=\"submit\" value=\"Send\">");
+    out.print("<input type=\"reset\" value=\"Cancel\"></p>");
+    out.print("</form></body></html>");
   }
 }

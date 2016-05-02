@@ -1,0 +1,10 @@
+Table: message
+
++----------+---------------+------+-----+---------+----------------+
+| Field    | Type          | Null | Key | Default | Extra          |
++----------+---------------+------+-----+---------+----------------+
+| id       | bigint(20)    | NO   | PRI | NULL    | auto_increment |
+| fromUser | varchar(20)   | NO   |     | NULL    |                |
+| toUser   | varchar(20)   | NO   |     | NULL    |                |
+| text     | varchar(1200) | NO   |     | NULL    |                |
++----------+---------------+------+-----+---------+----------------+
