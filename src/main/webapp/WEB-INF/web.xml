@@ -44,5 +44,14 @@
         <url-pattern>/message/*</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>user</servlet-name>
+        <servlet-class>forum.servlet.UserPageServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>user</servlet-name>
+        <url-pattern>/user/*</url-pattern>
+    </servlet-mapping>
+
 
 </web-app>

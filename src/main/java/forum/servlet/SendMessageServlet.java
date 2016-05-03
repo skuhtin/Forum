@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 public class SendMessageServlet extends HttpServlet{
+  MessageDao messageDao = new MessageDao();
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     viewPage(req, resp);
@@ -34,6 +35,7 @@ public class SendMessageServlet extends HttpServlet{
     out.print("<form action=\"/forum/" + getTopicId(req) + "\" method=\"GET\">");
     out.print("<p><input type=\"submit\" value=\"Back\">");
     out.print("</form>");
+    out.close();
 
   }
 
@@ -52,7 +54,8 @@ public class SendMessageServlet extends HttpServlet{
       String userName = cookies[1].getValue();
       PrintWriter out = resp.getWriter();
       out.print("<html><body>");
-      out.print("Hi, " + userName);
+      out.print("<a href='/user/" + userName + "'>Hi, " + userName + "</a>");
+      out.print(" (" + messageDao.getNewMessages(userName) + " new messages)");
       out.print("<h3>Send private message to " + getUserForSend(req) + "</h3>");
       out.print("<form action=\"/message/" + getTopicId(req) + "/" + getUserForSend(req) + "\" method=\"POST\">");
       out.print("<textarea name=\"message\" cols=\"40\" rows=\"3\"></textarea>");

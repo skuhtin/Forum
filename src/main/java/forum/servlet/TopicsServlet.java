@@ -1,6 +1,8 @@
 package forum.servlet;
 
+import forum.dao.MessageDao;
 import forum.dao.TopicDao;
+import forum.model.Message;
 import forum.model.Topic;
 import forum.model.User;
 
@@ -12,6 +14,7 @@ import javax.servlet.http.*;
 public class TopicsServlet extends HttpServlet{
 
   private TopicDao topicDao = new TopicDao();
+  private MessageDao messageDao = new MessageDao();
 
   @Override
   public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -28,7 +31,9 @@ public class TopicsServlet extends HttpServlet{
       String userName = cookies[1].getValue();
       PrintWriter out = resp.getWriter();
       out.print("<html><body>");
-      out.print("Hi, " + userName);
+      //out.print("Hi, " + userName);
+      out.print("<a href='/user/" + userName + "'>Hi, " + userName + "</a>");
+      out.print(" (" + messageDao.getNewMessages(userName) + " new messages)");
       out.print("<h1>List of topics</h1>");
       out.print("<ul>");
       for (Map.Entry<Integer, Topic> print : topics.entrySet()) {

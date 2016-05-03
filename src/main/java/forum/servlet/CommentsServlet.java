@@ -1,6 +1,7 @@
 package forum.servlet;
 
 import forum.dao.CommentsDao;
+import forum.dao.MessageDao;
 import forum.dao.TopicDao;
 import forum.model.Comment;
 import forum.model.Topic;
@@ -19,6 +20,7 @@ public class CommentsServlet extends HttpServlet {
 
   private TopicDao topicDao = new TopicDao();
   private CommentsDao commentsDao = new CommentsDao();
+  private MessageDao messageDao = new MessageDao();
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -51,7 +53,8 @@ public class CommentsServlet extends HttpServlet {
       Topic topic = topics.get(id);
       PrintWriter out = resp.getWriter();
       out.println("<html><body>");
-      out.print("Hi, " + userName);
+      out.print("<a href='/user/" + userName + "'>Hi, " + userName + "</a>");
+      out.print(" (" + messageDao.getNewMessages(userName) + " new messages)");
       out.print("<h1>Read and discuss topic</h1>");
       out.print("<h3>" + topic.getHead() + "</h3>");
       out.print(topic.getText() + "<br>");
@@ -65,6 +68,7 @@ public class CommentsServlet extends HttpServlet {
         out.print(comment.getText());
       }
       sendComment(id, out);
+      out.print("</body></html>");
 
       out.close();
     }catch(ArrayIndexOutOfBoundsException e) {
@@ -78,6 +82,6 @@ public class CommentsServlet extends HttpServlet {
     out.print("<textarea name=\"comment\" cols=\"40\" rows=\"3\"></textarea></p>");
     out.print("<p><input type=\"submit\" value=\"Send\">");
     out.print("<input type=\"reset\" value=\"Cancel\"></p>");
-    out.print("</form></body></html>");
+    out.print("</form>");
   }
 }
