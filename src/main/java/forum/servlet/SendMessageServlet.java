@@ -20,11 +20,9 @@ public class SendMessageServlet extends HttpServlet{
 
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
     MessageDao messageDao = new MessageDao();
     String text = req.getParameter("message");
-    Cookie[] cookies = req.getCookies();
-    String userName = cookies[1].getValue();
+    String userName = getUserName(req,resp);
     Message message = new Message(text);
     message.setFromUser(userName);
     message.setToUser(getUserForSend(req));
@@ -43,19 +41,19 @@ public class SendMessageServlet extends HttpServlet{
     String[] parameters = req.getPathInfo().substring(1).split("/");
     return parameters[0];
   }
+
   private String getUserForSend(HttpServletRequest req) {
     String[] parameters = req.getPathInfo().substring(1).split("/");
     return parameters[1];
   }
 
   private void viewPage(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-    Cookie[] cookies = req.getCookies();
-    try {
-      String userName = cookies[1].getValue();
+      String userName = getUserName(req, resp);
       PrintWriter out = resp.getWriter();
       out.print("<html><body>");
       out.print("<a href='/user/" + userName + "'>Hi, " + userName + "</a>");
       out.print(" (" + messageDao.getNewMessages(userName) + " new messages)");
+      out.print(" " + "<a href='/login'>LogOut</a>");
       out.print("<h3>Send private message to " + getUserForSend(req) + "</h3>");
       out.print("<form action=\"/message/" + getTopicId(req) + "/" + getUserForSend(req) + "\" method=\"POST\">");
       out.print("<textarea name=\"message\" cols=\"40\" rows=\"3\"></textarea>");
@@ -63,11 +61,17 @@ public class SendMessageServlet extends HttpServlet{
       out.print("<input type=\"reset\" value=\"Cancel\"></p>");
       out.print("</form></body></html>");
       out.close();
+  }
 
-    }catch (ArrayIndexOutOfBoundsException e) {
+  private String getUserName(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    String userName = null;
+    try {
+      Cookie[] cookies = req.getCookies();
+      userName = cookies[1].getValue();
+    } catch (ArrayIndexOutOfBoundsException e) {
       resp.sendRedirect("/login");
     }
-  }
+    return userName;  }
 
 
 }

@@ -16,9 +16,7 @@ public class UserPageServlet extends HttpServlet{
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    Cookie[] cookies = req.getCookies();
-    try {
-      String userName = cookies[1].getValue();
+      String userName = getUserName(req, resp);
       MessageDao messageDao = new MessageDao();
       PrintWriter out = resp.getWriter();
       messageDao.setReadMessage(userName);
@@ -37,9 +35,18 @@ public class UserPageServlet extends HttpServlet{
       out.println("<p><input type=\"submit\" value=\"Back to main page\">");
       out.println("</form>");
       out.print("</body></html>");
-    }catch (ArrayIndexOutOfBoundsException e) {
+
+  }
+
+  private String getUserName(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    String userName = null;
+    try {
+      Cookie[] cookies = req.getCookies();
+      userName = cookies[1].getValue();
+    } catch (ArrayIndexOutOfBoundsException e) {
       resp.sendRedirect("/login");
     }
+    return userName;
   }
 
 }

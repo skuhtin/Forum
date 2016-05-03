@@ -38,42 +38,37 @@ public class CommentsServlet extends HttpServlet {
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     String text = req.getParameter("comment");
     int id = getId(req);
-    Cookie[] cookies = req.getCookies();
-    String userName = cookies[1].getValue();
+    String userName = getUserName(req, resp);
     commentsDao.insertComment(id, new Comment(text, userName));
     viewCommentsPage(req, resp, id);
   }
 
   private void viewCommentsPage(HttpServletRequest req, HttpServletResponse resp, int id) throws IOException {
-    Cookie[] cookies = req.getCookies();
-    try {
-      String userName = cookies[1].getValue();
-      Map<Integer, Topic> topics = topicDao.loadTopic();
-      List<Comment> comments = commentsDao.loadComment(id);
-      Topic topic = topics.get(id);
-      PrintWriter out = resp.getWriter();
-      out.println("<html><body>");
-      out.print("<a href='/user/" + userName + "'>Hi, " + userName + "</a>");
-      out.print(" (" + messageDao.getNewMessages(userName) + " new messages)");
-      out.print("<h1>Read and discuss topic</h1>");
-      out.print("<h3>" + topic.getHead() + "</h3>");
-      out.print(topic.getText() + "<br>");
-      out.println("<form action=\"/forum\" method=\"GET\">");
-      out.println("<p><input type=\"submit\" value=\"Back\">");
-      out.print("</form>");
-      out.print("<p><b>Comments:</b><br>");
-      for (Comment comment : comments) {
-        out.print("<p><b>" + comment.getUserHandler() + " said:</b>");
-        out.print("(" + "<a href='/message/" + id + "/" + comment.getUserHandler() + "'>Send msg</a>" + ")<br>");
-        out.print(comment.getText());
-      }
-      sendComment(id, out);
-      out.print("</body></html>");
-
-      out.close();
-    }catch(ArrayIndexOutOfBoundsException e) {
-      resp.sendRedirect("/login");
+    String userName = getUserName(req, resp);
+    Map<Integer, Topic> topics = topicDao.loadTopic();
+    List<Comment> comments = commentsDao.loadComment(id);
+    Topic topic = topics.get(id);
+    PrintWriter out = resp.getWriter();
+    out.println("<html><body>");
+    out.print("<a href='/user/" + userName + "'>Hi, " + userName + "</a>");
+    out.print(" (" + messageDao.getNewMessages(userName) + " new messages)");
+    out.print(" " + "<a href='/login'>LogOut</a>");
+    out.print("<h1>Read and discuss topic</h1>");
+    out.print("<h3>" + topic.getHead() + "</h3>");
+    out.print(topic.getText() + "<br>");
+    out.println("<form action=\"/forum\" method=\"GET\">");
+    out.println("<p><input type=\"submit\" value=\"Back\">");
+    out.print("</form>");
+    out.print("<p><b>Comments:</b><br>");
+    for (Comment comment : comments) {
+      out.print("<p><b>" + comment.getUserHandler() + " said:</b>");
+      out.print("(" + "<a href='/message/" + id + "/" + comment.getUserHandler() + "'>Send msg</a>" + ")<br>");
+      out.print(comment.getText());
     }
+    sendComment(id, out);
+    out.print("</body></html>");
+    out.close();
+
   }
 
   private void sendComment(int id, PrintWriter out) {
@@ -84,4 +79,17 @@ public class CommentsServlet extends HttpServlet {
     out.print("<input type=\"reset\" value=\"Cancel\"></p>");
     out.print("</form>");
   }
+
+  private String getUserName(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    String userName = null;
+    try {
+      Cookie[] cookies = req.getCookies();
+      userName = cookies[1].getValue();
+    } catch (ArrayIndexOutOfBoundsException e) {
+      resp.sendRedirect("/login");
+    }
+    return userName;
+  }
+
 }
+
