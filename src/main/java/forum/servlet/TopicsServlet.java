@@ -19,7 +19,6 @@ public class TopicsServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     resp.setContentType("text/html;charset=UTF-8");
-    //!!!!!resp.sendRedirect("login");
     Map<Integer, Topic> topics = topicDao.loadTopic();
     viewTopicPage(req, resp, topics);
   }
@@ -29,7 +28,6 @@ public class TopicsServlet extends HttpServlet {
     PrintWriter out = resp.getWriter();
     String userName = getUserName(req, resp);
     out.print("<html><body>");
-    //out.print("Hi, " + userName);
     out.print("<a href='/user/" + userName + "'>Hi, " + userName + "</a>");
     out.print(" (" + messageDao.getNewMessages(userName) + " new messages)");
     out.print(" " + "<a href='/login'>LogOut</a>");
@@ -61,8 +59,8 @@ public class TopicsServlet extends HttpServlet {
     String userName = null;
     try {
       Cookie[] cookies = req.getCookies();
-      userName = cookies[1].getValue();
-    } catch (ArrayIndexOutOfBoundsException e) {
+      userName = cookies[0].getValue();
+    } catch (NullPointerException e) {
       resp.sendRedirect("/login");
     }
     return userName;

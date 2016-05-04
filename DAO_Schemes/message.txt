@@ -7,4 +7,5 @@ Table: message
 | fromUser | varchar(20)   | NO   |     | NULL    |                |
 | toUser   | varchar(20)   | NO   |     | NULL    |                |
 | text     | varchar(1200) | NO   |     | NULL    |                |
+| notRead  | tinyint(1)    | NO   |     | 1       |                |
 +----------+---------------+------+-----+---------+----------------+

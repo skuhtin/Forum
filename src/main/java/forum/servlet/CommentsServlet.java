@@ -84,8 +84,8 @@ public class CommentsServlet extends HttpServlet {
     String userName = null;
     try {
       Cookie[] cookies = req.getCookies();
-      userName = cookies[1].getValue();
-    } catch (ArrayIndexOutOfBoundsException e) {
+      userName = cookies[0].getValue();
+    } catch (NullPointerException e) {
       resp.sendRedirect("/login");
     }
     return userName;
