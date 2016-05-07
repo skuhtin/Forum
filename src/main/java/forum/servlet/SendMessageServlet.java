@@ -1,6 +1,7 @@
 package forum.servlet;
 
 import forum.dao.MessageDao;
+import forum.dao.UsersDao;
 import forum.model.Message;
 
 import javax.servlet.ServletException;
@@ -13,6 +14,8 @@ import java.io.PrintWriter;
 
 public class SendMessageServlet extends HttpServlet{
   MessageDao messageDao = new MessageDao();
+  private UsersDao usersDao = new UsersDao();
+
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     viewPage(req, resp);
@@ -49,6 +52,9 @@ public class SendMessageServlet extends HttpServlet{
 
   private void viewPage(HttpServletRequest req, HttpServletResponse resp) throws IOException {
       String userName = getUserName(req, resp);
+    if (!usersDao.sameLogin(userName)) {
+      resp.sendRedirect("/login");
+    }
       PrintWriter out = resp.getWriter();
       out.print("<html><body>");
       out.print("<a href='/user/" + userName + "'>Hi, " + userName + "</a>");

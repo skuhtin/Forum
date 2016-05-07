@@ -3,13 +3,14 @@ package forum.servlet;
 import forum.dao.UsersDao;
 import forum.model.User;
 
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.List;
 
 public class LoginServlet extends HttpServlet{
@@ -37,8 +38,10 @@ public class LoginServlet extends HttpServlet{
     resp.sendRedirect(page);
   }
 
-  private void viewPage(PrintWriter out) {
-    out.print("<html><head>");
+  private void viewPage(PrintWriter out) throws IOException{
+    String dir = getServletContext().getRealPath("");
+
+    /*out.print("<html><head>");
     out.print("<title>Authentication form</title>");
     out.print("</head>");
     out.print("<body>");
@@ -52,6 +55,18 @@ public class LoginServlet extends HttpServlet{
     out.print("<form action=\"/ban\" method=\"GET\">");
     out.print("<input type=\"submit\" name=\"registration\" value=\"Registration\"><br>");
     out.print("</form>");
-    out.println("</body></html>");
+    out.println("</body></html>"); */
+
+    File page = new File(dir + "/index.html");
+
+    BufferedReader rd = new BufferedReader(new FileReader(page));
+    String line;
+    while ((line = rd.readLine()) != null) {
+      out.print(line);
+    }
+
+
+
+
   }
 }
