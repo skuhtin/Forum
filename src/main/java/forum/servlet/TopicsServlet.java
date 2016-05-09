@@ -2,10 +2,8 @@ package forum.servlet;
 
 import forum.dao.MessageDao;
 import forum.dao.TopicDao;
-import forum.dao.UsersDao;
-import forum.model.Message;
 import forum.model.Topic;
-import forum.model.User;
+
 
 import java.io.*;
 import java.util.Map;
@@ -16,7 +14,6 @@ public class TopicsServlet extends HttpServlet {
 
   private TopicDao topicDao = new TopicDao();
   private MessageDao messageDao = new MessageDao();
-  private UsersDao usersDao = new UsersDao();
 
   @Override
   public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -29,9 +26,6 @@ public class TopicsServlet extends HttpServlet {
 
     PrintWriter out = resp.getWriter();
     String userName = getUserName(req, resp);
-    if (!usersDao.sameLogin(userName)) {
-      resp.sendRedirect("/login");
-    }
     out.print("<html><body>");
     out.print("<a href='/user/" + userName + "'>Hi, " + userName + "</a>");
     out.print(" (" + messageDao.getNewMessages(userName) + " new messages)");
@@ -43,10 +37,6 @@ public class TopicsServlet extends HttpServlet {
       int id = print.getKey();
       out.print("<li>");
       out.print("<b><a href='/forum/" + id + "'>" + topic.getHead() + "</a></b>" + " added by " + topic.getHandleUser());
-      if (userName.equals(topic.getHandleUser())) {
-        out.print("<br><input type=\"button\" value=\"Delete\">");
-        out.print("<input type=\"button\" value=\"Edit\"><p>");
-      }
       out.print("</li>");
     }
     out.print("</ul>");

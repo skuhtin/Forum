@@ -3,7 +3,6 @@ package forum.servlet;
 import forum.dao.CommentsDao;
 import forum.dao.MessageDao;
 import forum.dao.TopicDao;
-import forum.dao.UsersDao;
 import forum.model.Comment;
 import forum.model.Topic;
 
@@ -22,7 +21,6 @@ public class CommentsServlet extends HttpServlet {
   private TopicDao topicDao = new TopicDao();
   private CommentsDao commentsDao = new CommentsDao();
   private MessageDao messageDao = new MessageDao();
-  private UsersDao usersDao = new UsersDao();
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -47,9 +45,6 @@ public class CommentsServlet extends HttpServlet {
 
   private void viewCommentsPage(HttpServletRequest req, HttpServletResponse resp, int id) throws IOException {
     String userName = getUserName(req, resp);
-    if (!usersDao.sameLogin(userName)) {
-      resp.sendRedirect("/login");
-    }
     Map<Integer, Topic> topics = topicDao.loadTopic();
     List<Comment> comments = commentsDao.loadComment(id);
     Topic topic = topics.get(id);
@@ -69,10 +64,6 @@ public class CommentsServlet extends HttpServlet {
       out.print("<p><b>" + comment.getUserHandler() + " said:</b>");
       out.print("(" + "<a href='/message/" + id + "/" + comment.getUserHandler() + "'>Send msg</a>" + ")<br>");
       out.print(comment.getText());
-      if (userName.equals(topic.getHandleUser())) {
-        out.print("<br><input type=\"button\" value=\"Delete\">");
-        out.print("<input type=\"button\" value=\"Edit\"><p>");
-      }
     }
     sendComment(id, out);
     out.print("</body></html>");
@@ -101,4 +92,3 @@ public class CommentsServlet extends HttpServlet {
   }
 
 }
-

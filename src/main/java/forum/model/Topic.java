@@ -1,6 +1,7 @@
 package forum.model;
 
 public class Topic {
+
   private String handleUser;
   private String headOfTopic;
   private String textOfTopic;
