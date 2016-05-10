@@ -1,0 +1,37 @@
+body {
+    background-color:  #FFEE8C
+}
+
+h1 {
+    text-align: center;
+    color: brown;
+    font-family: cursive;
+}
+
+.myCenter {
+    height: 50%;
+    overflow: scroll;
+    background-color: #FFEE8C;
+}
+
+.myCenter h1 {
+    text-align: center;
+    color: brown;
+    font-family: cursive;
+}
+
+.header {
+    padding: 32px;
+    height: 15%;
+    color: inherit;
+    font-family: cursive;
+    background-color: #FFEE8C;
+}
+.header h1,
+.header .h1 {
+    color: inherit;
+}
+.myCommon {
+    background-color: #FFEE8C;
+    height: 35%;
+}

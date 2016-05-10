@@ -4,7 +4,6 @@ import forum.dao.MessageDao;
 import forum.dao.TopicDao;
 import forum.model.Topic;
 
-
 import java.io.*;
 import java.util.Map;
 import javax.servlet.ServletException;
@@ -18,49 +17,37 @@ public class TopicsServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     resp.setContentType("text/html;charset=UTF-8");
-    Map<Integer, Topic> topics = topicDao.loadTopic();
-    viewTopicPage(req, resp, topics);
-  }
-
-  private void viewTopicPage(HttpServletRequest req, HttpServletResponse resp, Map<Integer, Topic> topics) throws IOException {
-
-    PrintWriter out = resp.getWriter();
-    String userName = getUserName(req, resp);
-    out.print("<html><body>");
-    out.print("<a href='/user/" + userName + "'>Hi, " + userName + "</a>");
-    out.print(" (" + messageDao.getNewMessages(userName) + " new messages)");
-    out.print(" " + "<a href='/login'>LogOut</a>");
-    out.print("<h1>List of topics</h1>");
-    out.print("<ul>");
-    for (Map.Entry<Integer, Topic> print : topics.entrySet()) {
-      Topic topic = print.getValue();
-      int id = print.getKey();
-      out.print("<li>");
-      out.print("<b><a href='/forum/" + id + "'>" + topic.getHead() + "</a></b>" + " added by " + topic.getHandleUser());
-      out.print("</li>");
+    String userName = getUserName(req);
+    String page;
+    String forumPage = "/forum";
+    String loginPage = "/login";
+    if (userName == null) {
+      page = "/login";
+    } else {
+      page = "/WEB-INF/jsp/topic.jsp";
+      int countNewMessage = messageDao.getNewMessages(userName);
+      Map<Integer, Topic> topics = topicDao.loadTopic();
+      req.setAttribute("userName", userName);
+      req.setAttribute("countNewMessage", countNewMessage);
+      req.setAttribute("topics", topics);
+      req.setAttribute("forumPage", forumPage);
+      req.setAttribute("loginPage", loginPage);
     }
-    out.print("</ul>");
-    out.println("<form action=\"/forum\" method=\"POST\">");
-    out.println("<p><h3>Add new topic</h3>");
-    out.print("<b>Head of topic:</b><br>");
-    out.println("<textarea name=\"head\" cols=\"40\" rows=\"1\"></textarea><br>");
-    out.print("<b>Text of topic:</b><br>");
-    out.println("<textarea name=\"comment\" cols=\"40\" rows=\"3\"></textarea>");
-    out.println("<p><input type=\"submit\" value=\"Send\">");
-    out.println("<input type=\"reset\" value=\"Cancel\"></p>");
-    out.println("</form>");
-    out.println("</body></html>");
-    out.close();
-
+    req.getRequestDispatcher(page).forward(req, resp);
   }
 
-  private String getUserName(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+
+  private String getUserName(HttpServletRequest req) throws IOException, ServletException {
     String userName = null;
     try {
       Cookie[] cookies = req.getCookies();
-      userName = cookies[0].getValue();
+      for (Cookie cookie : cookies) {
+        if (cookie.getName().equals("login")) {
+          userName = cookie.getValue();
+        }
+      }
     } catch (NullPointerException e) {
-      resp.sendRedirect("/login");
+      return null;
     }
     return userName;
   }
@@ -69,10 +56,9 @@ public class TopicsServlet extends HttpServlet {
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     String newHeadOfTopic = req.getParameter("head");
     String newBodyOfTopic = req.getParameter("comment");
-    String userName = getUserName(req, resp);
+    String userName = getUserName(req);
     Topic topic = new Topic(newHeadOfTopic, newBodyOfTopic, userName);
     topicDao.insertTopic(topic);
-    Map<Integer, Topic> topics = topicDao.loadTopic();
-    viewTopicPage(req, resp, topics);
+    resp.sendRedirect("/forum");
   }
 }

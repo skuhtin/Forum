@@ -69,11 +69,17 @@ public class SendMessageServlet extends HttpServlet{
     String userName = null;
     try {
       Cookie[] cookies = req.getCookies();
-      userName = cookies[0].getValue();
+      for (Cookie cookie : cookies) {
+        if (cookie.getName().equals("login")) {
+          userName = cookie.getValue();
+        }
+      }
     } catch (NullPointerException e) {
       resp.sendRedirect("/login");
     }
-    return userName;  }
+    if (userName == null) resp.sendRedirect("/login");
+    return userName;
+  }
 
 
 }
