@@ -6,24 +6,19 @@ public class Message {
   private String text;
   private boolean notRead;
 
-  public Message(String text) {
+  public Message(String fromUser, String toUser, String text) {
+    this.fromUser = fromUser;
+    this.toUser = toUser;
+    this.text = text;
+  }
+
+  public Message(String fromUser, String text) {
+    this.fromUser = fromUser;
     this.text = text;
   }
 
   public boolean isNotRead() {
     return notRead;
-  }
-
-  public void setNotRead(boolean notRead) {
-    this.notRead = notRead;
-  }
-
-  public void setFromUser(String fromUser) {
-    this.fromUser = fromUser;
-  }
-
-  public void setToUser(String toUser) {
-    this.toUser = toUser;
   }
 
   public String getFromUser() {

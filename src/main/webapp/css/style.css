@@ -31,7 +31,40 @@ h1 {
 .header .h1 {
     color: inherit;
 }
+
 .myCommon {
     background-color: #FFEE8C;
     height: 35%;
+}
+.myReadTopic {
+    height: 27%;
+    overflow: scroll;
+    background-color: #FFEE8C;
+}
+
+.myReadTopic h1 {
+    text-align: center;
+    color: brown;
+    font-family: cursive;
+}
+.headerComment {
+    padding: 40px;
+    height: 20%;
+    color: inherit;
+    font-family: cursive;
+    background-color: #FFEE8C;
+    text-align: center;
+}
+.myComment {
+    height: 32%;
+    overflow: scroll;
+    background-color: #FFEE8C;
+}
+.Msg {
+    padding: 40px;
+    height: 100%;
+    color: inherit;
+    font-family: cursive;
+    background-color: #FFEE8C;
+    text-align: center;
 }

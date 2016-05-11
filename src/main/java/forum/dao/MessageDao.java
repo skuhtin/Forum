@@ -68,8 +68,7 @@ public class MessageDao {
     while (resultSet.next()) {
       String fromUser = resultSet.getString("fromUser");
       String text = resultSet.getString("text");
-      Message message = new Message(text);
-      message.setFromUser(fromUser);
+      Message message = new Message(fromUser, text);
       messages.add(message);
     }
     return messages;

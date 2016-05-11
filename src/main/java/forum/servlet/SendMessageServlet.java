@@ -9,33 +9,49 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
+
 
 public class SendMessageServlet extends HttpServlet{
   MessageDao messageDao = new MessageDao();
 
-
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    viewPage(req, resp);
+    String userName = getUserName(req);
+    String page;
+    if (userName == null) {
+      page = "/login";
+    } else {
+      page = "/WEB-INF/jsp/sendMsg.jsp";
+      String loginPage = "/login";
+      String toUser = getUserForSend(req);
+      int newMsg = messageDao.getNewMessages(userName);
+      String link = "/message/"  + getTopicId(req) + "/" + getUserForSend(req);
+      String returnLink = "/forum/" + getTopicId(req);
+      req.setAttribute("userName", userName);
+      req.setAttribute("countNewMessage", newMsg);
+      req.setAttribute("toUser", toUser);
+      req.setAttribute("link", link);
+      req.setAttribute("returnLink", returnLink);
+      req.setAttribute("loginPage",loginPage);
+    }
+    req.getRequestDispatcher(page).forward(req, resp);
   }
 
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    MessageDao messageDao = new MessageDao();
     String text = req.getParameter("message");
-    String userName = getUserName(req,resp);
-    Message message = new Message(text);
-    message.setFromUser(userName);
-    message.setToUser(getUserForSend(req));
+    String fromUser = getUserName(req);
+    int newMsg = messageDao.getNewMessages(fromUser);
+    String toUser = getUserForSend(req);
+    Message message = new Message(fromUser,toUser,text);
     messageDao.insertMessage(message);
-    PrintWriter out = resp.getWriter();
-    out.print("<html><body>");
-    out.print("<h2>Message has been sent successfully</h2>");
-    out.print("<form action=\"/forum/" + getTopicId(req) + "\" method=\"GET\">");
-    out.print("<p><input type=\"submit\" value=\"Back\">");
-    out.print("</form>");
-    out.close();
+    String loginPage = "/login";
+    String returnLink = "/forum/" + getTopicId(req);
+    req.setAttribute("returnLink", returnLink);
+    req.setAttribute("loginPage",loginPage);
+    req.setAttribute("userName", fromUser);
+    req.setAttribute("countNewMessage", newMsg);
+    req.getRequestDispatcher("/WEB-INF/jsp/responseMsg.jsp").forward(req,resp);
 
   }
 
@@ -49,23 +65,7 @@ public class SendMessageServlet extends HttpServlet{
     return parameters[1];
   }
 
-  private void viewPage(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-      String userName = getUserName(req, resp);
-      PrintWriter out = resp.getWriter();
-      out.print("<html><body>");
-      out.print("<a href='/user/" + userName + "'>Hi, " + userName + "</a>");
-      out.print(" (" + messageDao.getNewMessages(userName) + " new messages)");
-      out.print(" " + "<a href='/login'>LogOut</a>");
-      out.print("<h3>Send private message to " + getUserForSend(req) + "</h3>");
-      out.print("<form action=\"/message/" + getTopicId(req) + "/" + getUserForSend(req) + "\" method=\"POST\">");
-      out.print("<textarea name=\"message\" cols=\"40\" rows=\"3\"></textarea>");
-      out.print("<p><input type=\"submit\" value=\"Send\">");
-      out.print("<input type=\"reset\" value=\"Cancel\"></p>");
-      out.print("</form></body></html>");
-      out.close();
-  }
-
-  private String getUserName(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+  private String getUserName(HttpServletRequest req) throws IOException, ServletException {
     String userName = null;
     try {
       Cookie[] cookies = req.getCookies();
@@ -75,9 +75,8 @@ public class SendMessageServlet extends HttpServlet{
         }
       }
     } catch (NullPointerException e) {
-      resp.sendRedirect("/login");
+      return null;
     }
-    if (userName == null) resp.sendRedirect("/login");
     return userName;
   }
 
