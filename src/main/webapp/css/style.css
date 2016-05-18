@@ -67,4 +67,9 @@ h1 {
     font-family: cursive;
     background-color: #FFEE8C;
     text-align: center;
+    left: auto;
 }
+.head{
+    padding: 40px;
+}
+

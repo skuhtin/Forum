@@ -28,7 +28,6 @@ public class LoginServlet extends HttpServlet{
       page = "/ban";
     } else page = "/forum";
     Cookie cookieLog = new Cookie("login", login);
-    cookieLog.setMaxAge(300);
     resp.addCookie(cookieLog);
     resp.sendRedirect(page);
   }

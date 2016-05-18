@@ -1,7 +1,9 @@
 package forum.servlet;
 
 import forum.dao.MessageDao;
+import forum.dao.UsersDao;
 import forum.model.Message;
+import forum.model.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -13,13 +15,16 @@ import java.io.IOException;
 
 public class SendMessageServlet extends HttpServlet{
   MessageDao messageDao = new MessageDao();
+  UsersDao usersDao = new UsersDao();
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     String userName = getUserName(req);
     String page;
-    if (userName == null) {
+    if (userName == null){
       page = "/login";
+    } else if (usersDao.getUserbyLogin(userName).isBan()) {
+      page = "/ban";
     } else {
       page = "/WEB-INF/jsp/sendMsg.jsp";
       String loginPage = "/login";

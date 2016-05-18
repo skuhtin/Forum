@@ -12,6 +12,13 @@ public class User {
     this.password = password;
   }
 
+  public User(String login, String password, boolean ban, boolean admin) {
+    this.login = login;
+    this.password = password;
+    this.ban = ban;
+    this.admin = admin;
+  }
+
   public boolean isAdmin() {
     return admin;
   }

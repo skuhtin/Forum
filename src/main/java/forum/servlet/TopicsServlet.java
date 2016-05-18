@@ -2,7 +2,9 @@ package forum.servlet;
 
 import forum.dao.MessageDao;
 import forum.dao.TopicDao;
+import forum.dao.UsersDao;
 import forum.model.Topic;
+import forum.model.User;
 
 import java.io.*;
 import java.util.Map;
@@ -13,6 +15,7 @@ public class TopicsServlet extends HttpServlet {
 
   private TopicDao topicDao = new TopicDao();
   private MessageDao messageDao = new MessageDao();
+  private UsersDao usersDao = new UsersDao();
 
   @Override
   public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -21,13 +24,18 @@ public class TopicsServlet extends HttpServlet {
     String page;
     String forumPage = "/forum";
     String loginPage = "/login";
-    if (userName == null) {
+    if (userName == null){
       page = "/login";
-    } else {
+    } else if (usersDao.getUserbyLogin(userName).isBan()) {
+      page = "/ban";
+    }else {
       page = "/WEB-INF/jsp/topic.jsp";
+      User user = usersDao.getUserbyLogin(userName);
+      boolean userIsAdmin = user.isAdmin();
       int countNewMessage = messageDao.getNewMessages(userName);
       Map<Integer, Topic> topics = topicDao.loadTopic();
       req.setAttribute("userName", userName);
+      req.setAttribute("userIsAdmin", userIsAdmin);
       req.setAttribute("countNewMessage", countNewMessage);
       req.setAttribute("topics", topics);
       req.setAttribute("forumPage", forumPage);

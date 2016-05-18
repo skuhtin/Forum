@@ -30,27 +30,37 @@
                     <li>
                         <h4><a href="/forum/${item.getKey()}">${item.getValue().getHead()}</a></h4>
                         added by ${item.getValue().getHandleUser()}
+                        <c:if test="${userIsAdmin}">
+                            <form action="/admin/${item.getValue().getHandleUser()}" method="get">
+                                <p>
+                                    <button type="submit">User's properties</button>
+                                </p>
+                            </form>
+                        </c:if>
                     </li>
                 </c:forEach>
             </ul>
         </div>
     </div>
 </div>
-<div class="myCommon">
-<div class="container">
-    <form action="${forumPage}" method="post">
-        <p><h3>Add new topic:</h3></p>
-        <b>Head of topic:</b><br>
-        <textarea name="head" cols="40" rows="1"></textarea><br>
-        <b>Text of topic:</b><br>
-        <textarea name="comment" cols="40" rows="3"></textarea><br>
-        <p><input type="submit" value="Send">
-        <input type="reset" value="Cancel"></p>
-    </form>
-</div>
-<footer>
-    <b>&copy; S.V.Kuhtin</b>
-</footer>
+<div class="myCommon" >
+    <div class="container">
+        <form action="${forumPage}" method="post">
+            <p>
+
+            <h3>Add new topic:</h3></p>
+            <b>Head of topic:</b><br>
+            <textarea name="head" cols="40" rows="1"></textarea><br>
+            <b>Text of topic:</b><br>
+            <textarea name="comment" cols="40" rows="3"></textarea><br>
+
+            <p><input type="submit" value="Send">
+                <input type="reset" value="Cancel"></p>
+        </form>
+    </div>
+    <footer>
+        <b>&copy; S.V.Kuhtin</b>
+    </footer>
 </div>
 </body>
 </html>

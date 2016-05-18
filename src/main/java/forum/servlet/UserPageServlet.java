@@ -1,7 +1,9 @@
 package forum.servlet;
 
 import forum.dao.MessageDao;
+import forum.dao.UsersDao;
 import forum.model.Message;
+import forum.model.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -13,40 +15,64 @@ import java.io.PrintWriter;
 import java.util.List;
 
 public class UserPageServlet extends HttpServlet{
+  UsersDao usersDao = new UsersDao();
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-      String userName = getUserName(req, resp);
-      MessageDao messageDao = new MessageDao();
-      PrintWriter out = resp.getWriter();
-      messageDao.setReadMessage(userName);
-      List<Message> messages = messageDao.loadMessage(userName);
-      out.println("<html><body>");
-      out.print("<h1>" + userName + ", your private messages: </h1>");
-      out.print("<ul>");
-      for (Message message : messages) {
-        out.print("<li>");
-        out.print("<b>" + message.getFromUser() + " wrote: </b>");
-        out.print("<p>" + message.getText() + "<br>");
-        out.print("</li>");
-      }
-      out.print("</ul>");
-      out.println("<form action=\"/forum\" method=\"GET\">");
-      out.println("<p><input type=\"submit\" value=\"Back to main page\">");
-      out.println("</form>");
-      out.print("</body></html>");
+      String userName = getUserName(req);
 
+      if (userName == null || usersDao.getUserbyLogin(userName).isBan()) {
+        req.getRequestDispatcher("/login").forward(req,resp);
+      }
+    viewPage(resp, userName);
   }
 
-  private String getUserName(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+  private void viewPage(HttpServletResponse resp, String userName) throws IOException {
+    MessageDao messageDao = new MessageDao();
+    PrintWriter out = resp.getWriter();
+    messageDao.setReadMessage(userName);
+    List<Message> messages = messageDao.loadMessage(userName);
+    out.println("<html><body>");
+    out.print("<h1>" + userName + ", your private messages: </h1>");
+    out.print("<ul>");
+    for (Message message : messages) {
+      out.print("<li>");
+      out.print("<b>" + message.getFromUser() + " wrote: </b>");
+      out.print("<p>" + message.getText() + "<br>");
+      out.print("</li>");
+    }
+    out.print("</ul>");
+    out.println("<form action=\"/forum\" method=\"GET\">");
+    out.println("<p><input type=\"submit\" value=\"Back to main page\">");
+    out.println("</form>");
+    out.print("</body></html>");
+  }
+
+  private String getUserName(HttpServletRequest req) throws IOException, ServletException {
     String userName = null;
     try {
       Cookie[] cookies = req.getCookies();
-      userName = cookies[0].getValue();
+      for (Cookie cookie : cookies) {
+        if (cookie.getName().equals("login")) {
+          userName = cookie.getValue();
+        }
+      }
     } catch (NullPointerException e) {
-      resp.sendRedirect("/login");
+      return null;
     }
+
     return userName;
   }
 
+  @Override
+  protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    String userName = getUserName(req);
+
+    if (userName == null || usersDao.getUserbyLogin(userName).isBan()) {
+      req.getRequestDispatcher("/login").forward(req,resp);
+    }
+
+
+    viewPage(resp, userName);
+  }
 }

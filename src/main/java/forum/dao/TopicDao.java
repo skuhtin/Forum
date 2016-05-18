@@ -3,7 +3,7 @@ package forum.dao;
 import forum.model.Topic;
 
 import java.sql.*;
-import java.util.HashMap;
+import java.util.TreeMap;
 import java.util.Map;
 
 public class TopicDao {
@@ -40,7 +40,7 @@ public class TopicDao {
   private  Map<Integer, Topic> handleTopic(Connection connection) throws SQLException {
     Statement statement = connection.createStatement();
     ResultSet resultSet = statement.executeQuery("select * from topics");
-    Map<Integer, Topic> result = new HashMap<Integer, Topic>();
+    Map<Integer, Topic> result = new TreeMap<Integer, Topic>();
     while (resultSet.next()) {
       int id = resultSet.getInt(1);
       String head = resultSet.getString(2);

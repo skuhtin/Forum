@@ -3,8 +3,10 @@ package forum.servlet;
 import forum.dao.CommentsDao;
 import forum.dao.MessageDao;
 import forum.dao.TopicDao;
+import forum.dao.UsersDao;
 import forum.model.Comment;
 import forum.model.Topic;
+import forum.model.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -20,6 +22,7 @@ public class CommentsServlet extends HttpServlet {
   private TopicDao topicDao = new TopicDao();
   private CommentsDao commentsDao = new CommentsDao();
   private MessageDao messageDao = new MessageDao();
+  private UsersDao usersDao = new UsersDao();
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -27,8 +30,10 @@ public class CommentsServlet extends HttpServlet {
     String userName = getUserName(req);
     String page;
     int topicId = getId(req);
-    if (userName == null) {
+    if (userName == null){
       page = "/login";
+    } else if (usersDao.getUserbyLogin(userName).isBan()) {
+      page = "/ban";
     } else {
       page = "/WEB-INF/jsp/comments.jsp";
       String loginPage = "/login";
