@@ -9,14 +9,6 @@ import java.util.List;
 
 public class UsersDao {
 
-  public static void main(String[] args) throws SQLException {
-    // User user = new User("login", "password");
-    UsersDao usersDao = new UsersDao();
-    //usersDao.insertUser(user);
-    //usersDao.banProperty("login", true);
-    //usersDao.kickUser("test");
-  }
-
   public void banProperty(String userName, boolean ban) {
     Connection connection = getConnection();
     String request = "UPDATE users SET ban = ? WHERE login = ?";

@@ -15,7 +15,6 @@ public class LoginServlet extends HttpServlet{
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    resp.setContentType("text/html;charset=UTF-8");
     req.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(req,resp);
   }
 

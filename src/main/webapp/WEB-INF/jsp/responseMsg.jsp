@@ -11,8 +11,8 @@
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-form navbar-left">
-      <a href="/user/${userName}">Hi, ${userName}, you have ${countNewMessage} new
-        messages</a>
+      <a href="/user/${userName}">${userName}'s page (${countNewMessage} new
+        messages)</a>
     </div>
     <div class="navbar-form navbar-right">
       <a href="${loginPage}">LogOut</a>

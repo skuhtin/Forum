@@ -21,15 +21,21 @@ public class AdminPageServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     String userName = getUserName(req);
+    String actionUser = req.getParameter("actionUser");
+    if (actionUser == null) {
+      actionUser = req.getPathInfo().substring(1);
+    }
     String page;
     if (userName == null) {
       page = "/login";
     } else if (usersDao.getUserbyLogin(userName).isBan()) {
       page = "/ban";
-    } else {
+    } else if (usersDao.getUserbyLogin(actionUser) == null) {
+      sidebarAttributes(req);
+      page = "/WEB-INF/jsp/errorUser.jsp";
+    }else {
       page = "/WEB-INF/jsp/admin.jsp";
       sidebarAttributes(req);
-      String actionUser = req.getPathInfo().substring(1);
       req.setAttribute("actionUser", actionUser);
       req.setAttribute("userName", userName);
       req.setAttribute("actionBun", actionBun);

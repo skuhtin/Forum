@@ -2,16 +2,16 @@ body {
     background-color:  #FFEE8C
 }
 
-h1 {
+.centerPosition {
     text-align: center;
     color: brown;
-    font-family: cursive;
 }
 
 .myCenter {
-    height: 50%;
+    height: 45%;
     overflow: scroll;
     background-color: #FFEE8C;
+    font-size: 16px;
 }
 
 .myCenter h1 {
@@ -22,7 +22,7 @@ h1 {
 
 .header {
     padding: 32px;
-    height: 15%;
+    height: 23%;
     color: inherit;
     font-family: cursive;
     background-color: #FFEE8C;
@@ -68,6 +68,7 @@ h1 {
     background-color: #FFEE8C;
     text-align: center;
     left: auto;
+    font-size: 16px;
 }
 .head{
     padding: 40px;

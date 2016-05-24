@@ -29,7 +29,8 @@
 
 <div class="jumbotron">
   <div class="container">
-    <h1>Welcome to our forum!</h1>
+    <h1 class="text-center">Welcome to our forum!</h1>
+     <h3 class="text-center text-danger">login/pas : admin/admin - for test admin's privilege</h3>
   </div>
 </div>
 

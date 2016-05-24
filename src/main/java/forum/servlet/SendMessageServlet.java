@@ -28,13 +28,13 @@ public class SendMessageServlet extends HttpServlet{
     } else {
       page = "/WEB-INF/jsp/sendMsg.jsp";
       String loginPage = "/login";
-      String toUser = getUserForSend(req);
+      String actionUser = getUserForSend(req);
       int newMsg = messageDao.getNewMessages(userName);
-      String link = "/message/"  + getTopicId(req) + "/" + getUserForSend(req);
-      String returnLink = "/forum/" + getTopicId(req);
+      String link = "/message/" + getUserForSend(req);
+      String returnLink = "/forum";
       req.setAttribute("userName", userName);
       req.setAttribute("countNewMessage", newMsg);
-      req.setAttribute("toUser", toUser);
+      req.setAttribute("actionUser", actionUser);
       req.setAttribute("link", link);
       req.setAttribute("returnLink", returnLink);
       req.setAttribute("loginPage",loginPage);
@@ -51,7 +51,7 @@ public class SendMessageServlet extends HttpServlet{
     Message message = new Message(fromUser,toUser,text);
     messageDao.insertMessage(message);
     String loginPage = "/login";
-    String returnLink = "/forum/" + getTopicId(req);
+    String returnLink = "/forum";
     req.setAttribute("returnLink", returnLink);
     req.setAttribute("loginPage",loginPage);
     req.setAttribute("userName", fromUser);
@@ -59,15 +59,9 @@ public class SendMessageServlet extends HttpServlet{
     req.getRequestDispatcher("/WEB-INF/jsp/responseMsg.jsp").forward(req,resp);
 
   }
-
-  private String getTopicId(HttpServletRequest req) {
-    String[] parameters = req.getPathInfo().substring(1).split("/");
-    return parameters[0];
-  }
-
   private String getUserForSend(HttpServletRequest req) {
-    String[] parameters = req.getPathInfo().substring(1).split("/");
-    return parameters[1];
+    String parameters = req.getPathInfo().substring(1);
+    return parameters;
   }
 
   private String getUserName(HttpServletRequest req) throws IOException, ServletException {

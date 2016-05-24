@@ -42,9 +42,9 @@ public class CommentsServlet extends HttpServlet {
       int countNewMessage = messageDao.getNewMessages(userName);
       Map<Integer, Topic> topics = topicDao.loadTopic();
       List<Comment> comments = commentsDao.loadComment(topicId);
-      String link = "/message/" + topicId;
+      String link = "/message/";
       Topic topic = topics.get(topicId);
-      req.setAttribute("topicId", topicId);
+      //req.setAttribute("topicId", topicId);
       req.setAttribute("loginPage", loginPage);
       req.setAttribute("userName", userName);
       req.setAttribute("countNewMessage", countNewMessage);

@@ -19,7 +19,6 @@ public class TopicsServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    resp.setContentType("text/html;charset=UTF-8");
     String userName = getUserName(req);
     String page;
     String forumPage = "/forum";
@@ -32,6 +31,7 @@ public class TopicsServlet extends HttpServlet {
       page = "/WEB-INF/jsp/topic.jsp";
       User user = usersDao.getUserbyLogin(userName);
       boolean userIsAdmin = user.isAdmin();
+
       int countNewMessage = messageDao.getNewMessages(userName);
       Map<Integer, Topic> topics = topicDao.loadTopic();
       req.setAttribute("userName", userName);

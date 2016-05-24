@@ -11,9 +11,9 @@
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container">
         <div class="navbar-form navbar-left">
-            <a href="/user/${userName}">Hi, ${userName}, you have ${countNewMessage} new
-                messages</a>
-        </div>
+            <a href="/user/${userName}">${userName}'s page (${countNewMessage} new
+                messages)</a>
+            </div>
         <div class="navbar-form navbar-right">
             <a href="${loginPage}">LogOut</a>
         </div>
@@ -37,7 +37,7 @@
         <h3>Comments:</h3>
         <div class="row">
             <c:forEach var="item" items="${comments}">
-                <p><b>${item.getUserHandler()} said:</b>( <a href="${link}/${item.getUserHandler()}">Send msg</a> )<br>
+                <p><b>${item.getUserHandler()} said:</b>( <a href="${link}${item.getUserHandler()}">Send msg</a> )<br>
                 ${item.getText()}</p>
             </c:forEach>
         </div>

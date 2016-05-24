@@ -11,8 +11,8 @@
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-form navbar-left">
-      <a href="/user/${userName}">Hi, ${userName}, you have ${countNewMessage} new
-        messages</a>
+      <a href="/user/${userName}">${userName}'s page (${countNewMessage} new
+        messages)</a>
     </div>
     <div class="navbar-form navbar-right">
       <a href="${loginPage}">LogOut</a>
@@ -20,7 +20,7 @@
   </div>
 </nav>
 <div class="Msg">
-  <h3>Send private message to ${toUser}</h3>
+  <h3>Send private message to ${actionUser}</h3>
   <form action="${returnLink}" method="get" >
     <button type="submit" class="btn btn-primary">Back to comment's page</button>
   </form><br>
