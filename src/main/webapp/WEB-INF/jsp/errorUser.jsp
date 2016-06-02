@@ -9,16 +9,20 @@
     <link rel="stylesheet" href="/css/bootstrap.css">
 </head>
 <body>
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+<nav class="navbar navbar-dark bg-inverse navbar-fixed-top">
     <div class="container">
-        <div class="navbar-form navbar-right">
-            <a href="${loginPage}">LogOut</a>
-        </div>
-        <div class="navbar-form navbar-left">
-            <a href="${topicPage}">Back</a>
-        </div>
+        <ul class="nav navbar-nav">
+            <li class="nav-item">
+                <a href="/user/${userName}">${userName}'s page (${countNewMessage} new
+                    messages)</a>
+            </li>
+            <li class="nav-item pull-lg-right">
+                <a href="${loginPage}">LogOut</a>
+            </li>
+        </ul>
     </div>
 </nav>
+
 <div id="wrapper">
     <!-- Sidebar -->
     <div id="sidebar-wrapper">
@@ -33,7 +37,7 @@
             </c:forEach>
         </ul>
     </div>
-    <div class="Msg row col-lg-12">
+    <div class="jumbotron text-lg-center">
         <h1>User ${actionUser} is absent in our DB</h1>
     </div>
 </div>

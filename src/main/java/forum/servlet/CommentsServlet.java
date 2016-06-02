@@ -63,6 +63,7 @@ public class CommentsServlet extends HttpServlet {
 
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    req.setCharacterEncoding("UTF-8");
     String text = req.getParameter("comment");
     int topicId = getId(req);
     String userName = getUserName(req);

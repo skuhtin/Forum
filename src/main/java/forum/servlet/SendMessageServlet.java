@@ -44,6 +44,7 @@ public class SendMessageServlet extends HttpServlet{
 
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    req.setCharacterEncoding("UTF-8");
     String text = req.getParameter("message");
     String fromUser = getUserName(req);
     int newMsg = messageDao.getNewMessages(fromUser);

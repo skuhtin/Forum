@@ -8,50 +8,53 @@
     <link rel="stylesheet" href="/css/bootstrap.css">
 </head>
 <body>
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+<nav class="navbar navbar-dark bg-inverse navbar-fixed-top">
     <div class="container">
-        <div class="navbar-form navbar-left">
-            <a href="/user/${userName}">${userName}'s page (${countNewMessage} new
-                messages)</a>
-        </div>
-        <div class="navbar-form navbar-right">
-            <a href="${loginPage}">LogOut</a>
-        </div>
+        <ul class="nav navbar-nav">
+            <li class="nav-item">
+                <a href="/user/${userName}">${userName}'s page (${countNewMessage} new
+                    messages)</a>
+            </li>
+            <li class="nav-item pull-lg-right">
+                <a href="${loginPage}">LogOut</a>
+            </li>
+        </ul>
     </div>
 </nav>
-<div class="header">
-    <h1 class="text-center">List of topics</h1>
-    <c:if test="${userIsAdmin}">
-        <form action="/admin/" method="get">
-            <div class="container">
-                <input type="text" name="actionUser" rows="1" cols="10" placeholder="User Name">
-                <button type="submit" class="btn btn-danger">User properties</button>
-            </div>
-        </form>
-    </c:if>
-    <c:if test="${!userIsAdmin}">
-        <form action="/message/admin" method="get">
-            <div class="container">
-                <button type="submit" class="btn btn-danger">Send message to admin</button>
-            </div>
-        </form>
-    </c:if>
-</div>
-<div class="myCenter">
+<div class="jumbotron">
+    <div class="text-lg-center">
+        <h1>List of topics</h1>
+        <c:if test="${userIsAdmin}">
+            <form action="/admin/" method="get">
+                <div class="container">
+                    <input type="text" name="actionUser" rows="1" cols="10" placeholder="User Name">
+                    <button type="submit" class="btn btn-danger">User properties</button>
+                </div>
+            </form>
+        </c:if>
+        <c:if test="${!userIsAdmin}">
+            <form action="/message/admin" method="get">
+                <div class="container">
+                    <button type="submit" class="btn btn-danger">Send message to admin</button>
+                </div>
+            </form>
+        </c:if>
+    </div>
+
+
     <div class="container">
         <div class="row">
             <ul>
                 <c:forEach var="item" items="${topics}">
-                    <li>
+                    <li class="card card-block">
                         <a href="/forum/${item.getKey()}">${item.getValue().getHead()} </a>
-                        - added by ${item.getValue().getHandleUser()}<br>
+                        - added by ${item.getValue().getHandleUser()}
                     </li>
                 </c:forEach>
             </ul>
         </div>
     </div>
-</div>
-<div class="myCommon">
+
     <div class="container">
         <form action="${forumPage}" method="post">
             <p>

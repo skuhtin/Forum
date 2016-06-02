@@ -8,53 +8,69 @@
     <link rel="stylesheet" href="/css/bootstrap.css">
 </head>
 <body>
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+<nav class="navbar navbar-dark bg-inverse navbar-fixed-top">
     <div class="container">
-        <div class="navbar-form navbar-left">
-            <a href="/user/${userName}">${userName}'s page (${countNewMessage} new
-                messages)</a>
-            </div>
-        <div class="navbar-form navbar-right">
-            <a href="${loginPage}">LogOut</a>
-        </div>
+        <ul class="nav navbar-nav">
+            <li class="nav-item">
+                <a href="/user/${userName}">${userName}'s page (${countNewMessage} new
+                    messages)</a>
+            </li>
+            <li class="nav-item pull-lg-right">
+                <a href="${loginPage}">LogOut</a>
+            </li>
+        </ul>
     </div>
 </nav>
-<div class="headerComment">
-    <h1>Read and discuss topic</h1>
-    <form action="${forumPage}" method="get" >
-        <button type="submit" class="btn btn-primary">Back to topic's page</button>
-    </form>
-</div>
-<div class="myReadTopic">
-    <div class="container">
-        <h3>${topic.getHead()}</h3>
-        ${topic.getText()}
+<div class="jumbotron">
+    <div class="row ">
+        <div class="container text-lg-center">
+            <h2>Read and discuss topic</h2>
+            <form action="${forumPage}" method="get">
+                <button type="submit" class="btn btn-primary">Back to topic's page</button>
+            </form>
+        </div>
     </div>
-</div>
+    <div class="row">
+        <div class="container">
+            <h3>${topic.getHead()}</h3>
+            <p>${topic.getText()}</p>
+        </div>
+    </div>
 
-<div class="myComment">
-    <div class="container">
-        <h3>Comments:</h3>
-        <div class="row">
+    <div class="row">
+        <div class="container">
+            <h3>Comments:</h3>
             <c:forEach var="item" items="${comments}">
-                <p><b>${item.getUserHandler()} said:</b>( <a href="${link}${item.getUserHandler()}">Send msg</a> )<br>
-                ${item.getText()}</p>
+                <div class="card card-block">
+                    <b>${item.getUserHandler()} said:</b>( <a
+                            href="${link}${item.getUserHandler()}">Send
+                        msg</a> )<br>
+                            ${item.getText()}
+                </div>
             </c:forEach>
         </div>
     </div>
-</div>
 
-<div class="myCommon">
-    <div class="container">
-        <form action="${topicPage}" method="post">
-            <b>Add your comment:</b><br>
-            <textarea name="comment" cols="40" rows="3"></textarea><br>
-            <p><input type="submit" value="Send">
-                <input type="reset" value="Clear"></p>
-        </form>
+    <div class="row">
+        <div class="container">
+            <div class="card card-block">
+                <form action="${topicPage}" method="post">
+                    <div>
+                        <h6>Add your comment:</h6>
+                        <textarea name="comment" class="form-control" cols="40" rows="3"></textarea><br>
+                    </div>
+                    <div>
+                        <input type="submit" class="btn btn-primary" value="Send">
+                        <input type="reset" class="btn btn-default" value="Clear">
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
     <footer>
-        <b>&copy; S.V.Kuhtin</b>
+        <div class="center-block">
+            <b>&copy; S.V.Kuhtin</b>
+        </div>
     </footer>
 </div>
 

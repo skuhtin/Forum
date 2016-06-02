@@ -9,14 +9,17 @@
     <link rel="stylesheet" href="/css/bootstrap.css">
 </head>
 <body>
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+<nav class="navbar navbar-dark bg-inverse navbar-fixed-top">
     <div class="container">
-        <div class="navbar-form navbar-right">
-            <a href="${loginPage}">LogOut</a>
-        </div>
-        <div class="navbar-form navbar-left">
-            <a href="${topicPage}">Back</a>
-        </div>
+        <ul class="nav navbar-nav">
+            <li class="nav-item">
+                <a href="/user/${userName}">${userName}'s page (${countNewMessage} new
+                    messages)</a>
+            </li>
+            <li class="nav-item pull-lg-right">
+                <a href="${loginPage}">LogOut</a>
+            </li>
+        </ul>
     </div>
 </nav>
 <div id="wrapper">
@@ -35,27 +38,23 @@
     </div>
     <!-- /#sidebar-wrapper -->
     <!-- Page Content -->
-    <div class="Msg">
-        <div class="row">
-            <div class="col-lg-12">
-                <h1>What do you think about user ${actionUser}?</h1>
-
-                <p>
-
-                <form action="/admin/${actionUser}" method="post">
-                    <select name="action" size="1"
-                            style="background-color: wheat; border-color: wheat">
-                        <option value="${actionBun}">${actionBun}</option>
-                        <option value="${actionUnBun}">${actionUnBun}</option>
-                        <option value="${actionKick}">${actionKick}</option>
-                    </select>
-                    <button type="submit"
-                            style="background-color: wheat; border-bottom-color: wheat">Select
-                        action
-                    </button>
-                </form>
-                </p>
-            </div>
+    <div class="jumbotron">
+        <div class="text-lg-center">
+            <h1>What do you think about user ${actionUser}?</h1>
+            <p>
+            <form action="/admin/${actionUser}" method="post">
+                <select name="action" size="1"
+                        style="background-color: wheat; border-color: wheat">
+                    <option value="${actionBun}">${actionBun}</option>
+                    <option value="${actionUnBun}">${actionUnBun}</option>
+                    <option value="${actionKick}">${actionKick}</option>
+                </select>
+                <button type="submit"
+                        style="background-color: wheat; border-bottom-color: wheat">Select
+                    action
+                </button>
+            </form>
+            </p>
         </div>
     </div>
 </div>

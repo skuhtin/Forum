@@ -9,36 +9,40 @@
     <link rel="stylesheet" href="/css/bootstrap.css">
 </head>
 <body>
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+<nav class="navbar navbar-dark bg-inverse navbar-fixed-top">
     <div class="container">
-        <div class="navbar-form navbar-right">
-            <a href="${loginPage}">LogOut</a>
-        </div>
-        <div class="navbar-form navbar-left">
-            <a href="${forumPage}">Back</a>
-        </div>
+        <ul class="nav navbar-nav">
+            <li class="nav-item">
+                <a href="/user/${userName}">${userName}'s page (${countNewMessage} new
+                    messages)</a>
+            </li>
+            <li class="nav-item pull-lg-right">
+                <a href="${loginPage}">LogOut</a>
+            </li>
+        </ul>
     </div>
 </nav>
 <!-- Page Content -->
-<div class="Msg">
-    <div class="row">
-        <div class="col-lg-12">
-            <h1>${userName}, your private messages.</h1>
+<div class="jumbotron">
+    <div class="text-lg-center">
+        <h1>${userName}, your private messages.</h1>
 
-            <form action="/forum" method="get">
-                <button type="submit" class="btn btn-primary">Back to main page</button>
-            </form>
-            <ul class="text-left">
+        <form action="/forum" method="get">
+            <button type="submit" class="btn btn-primary">Back to main page</button>
+        </form>
+    </div>
+    <div class="container">
+        <div class="row">
+            <ul>
                 <c:forEach var="message" items="${messages}">
-                    <li><p>
+                    <li class="card card-block">
                         <b>${message.getFromUser()} wrote: </b><br>
                             ${message.getText()}
-                    </p></li>
+                    </li>
                 </c:forEach>
             </ul>
         </div>
     </div>
 </div>
-
 </body>
 </html>

@@ -3,57 +3,74 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Authentication form</title>
-  <link rel="stylesheet" type="text/css" href="/css/style.css">
-  <link rel="stylesheet" href="/css/bootstrap.css">
+    <meta charset="UTF-8">
+    <title>Authentication form</title>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" href="/css/bootstrap.css">
 
 </head>
 <body>
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-  <div class="container">
-    <form action="/ban" method="get" class="navbar-form navbar-left" role="form">
-      <button type="submit" class="btn btn-primary">Press for registration &raquo;</button>
-    </form>
-    <form action="/login" method="post" class="navbar-form navbar-right" role="form">
-      <div class="form-group">
-        <input type="text" name="login" placeholder="Login" class="form-control">
-      </div>
-      <div class="form-group">
-        <input type="password" name="password" placeholder="Password" class="form-control">
-      </div>
-      <button type="submit" class="btn btn-primary">Sign in</button>
-    </form>
-  </div>
+
+<nav class="navbar navbar-dark bg-inverse navbar-fixed-top">
+    <div class="container">
+        <ul class="nav navbar-nav">
+            <li class="nav-item">
+                <form action="/ban" method="get" role="form">
+                    <button type="submit" class="btn btn-primary">Press for
+                        registration &raquo;</button>
+                </form>
+            </li>
+            <li class="nav-item form-inline pull-lg-right">
+                <form action="/login" method="post" role="form">
+                    <div class="form-group">
+                        <input type="text" name="login" placeholder="Login" class="form-control">
+                        <input type="password" name="password" placeholder="Password"
+                               class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Sign in</button>
+                </form>
+            </li>
+        </ul>
+    </div>
 </nav>
 
 <div class="jumbotron">
-  <div class="container">
-    <h1 class="text-center">Welcome to our forum!</h1>
-     <h3 class="text-center text-danger">login/pas : admin/admin - for test admin's privilege</h3>
-  </div>
+    <div class="container">
+        <div class="text-lg-center">
+            <h1>Welcome to our forum!</h1>
+
+            <h3 class="text-danger">login/pas : admin/admin - for test admin's privilege</h3>
+
+            <form action="#" method="get" role="form">
+                <button type="submit" class="btn btn-primary">About me :)</button>
+            </form>
+        </div>
+    </div>
 </div>
 
 <div class="container">
-  <div class="row">
-    <div class="col-md-4">
-      <h2>Some news 1</h2>
-      <p>Text of news</p>
-    </div>
-    <div class="col-md-4">
-      <h2>Some news 2</h2>
-      <p>Text of news</p>
-    </div>
-    <div class="col-md-4">
-      <h2>Some news 3</h2>
-      <p>Text of news</p>
-    </div>
-  </div>
+    <div class="row">
+        <div class="col-md-4">
+            <h2>Some news 1</h2>
 
-  <hr>
-  <footer>
-    <p>&copy; S.V.Kuhtin</p>
-  </footer>
+            <p>Text of news</p>
+        </div>
+        <div class="col-md-4">
+            <h2>Some news 2</h2>
+
+            <p>Text of news</p>
+        </div>
+        <div class="col-md-4">
+            <h2>Some news 3</h2>
+
+            <p>Text of news</p>
+        </div>
+    </div>
+
+    <hr>
+    <footer>
+        <p>&copy; S.V.Kuhtin</p>
+    </footer>
 
 </div>
 

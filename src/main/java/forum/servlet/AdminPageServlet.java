@@ -1,6 +1,8 @@
 package forum.servlet;
 
+import forum.dao.MessageDao;
 import forum.dao.UsersDao;
+import forum.model.Message;
 import forum.model.User;
 
 import javax.servlet.ServletException;
@@ -14,6 +16,7 @@ import java.util.List;
 
 public class AdminPageServlet extends HttpServlet {
   UsersDao usersDao = new UsersDao();
+  MessageDao messageDao = new MessageDao();
   String actionBun = "Bun";
   String actionUnBun = "UnBun";
   String actionKick = "Kick";
@@ -36,6 +39,8 @@ public class AdminPageServlet extends HttpServlet {
     }else {
       page = "/WEB-INF/jsp/admin.jsp";
       sidebarAttributes(req);
+      int newMsg = messageDao.getNewMessages(userName);
+      req.setAttribute("countNewMessage", newMsg);
       req.setAttribute("actionUser", actionUser);
       req.setAttribute("userName", userName);
       req.setAttribute("actionBun", actionBun);
@@ -47,6 +52,7 @@ public class AdminPageServlet extends HttpServlet {
 
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    req.setCharacterEncoding("UTF-8");
     String userName = getUserName(req);
     String action = req.getParameter("action");
     String actionUser = req.getPathInfo().substring(1);
@@ -62,6 +68,8 @@ public class AdminPageServlet extends HttpServlet {
     }
     String page = "/WEB-INF/jsp/actionResponse.jsp";
     sidebarAttributes(req);
+    int newMsg = messageDao.getNewMessages(userName);
+    req.setAttribute("countNewMessage", newMsg);
     req.setAttribute("actionUser", actionUser);
     req.setAttribute("action", action);
     req.setAttribute("userName", userName);

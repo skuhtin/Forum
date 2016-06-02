@@ -16,6 +16,7 @@ import java.util.List;
 
 public class UserPageServlet extends HttpServlet {
   UsersDao usersDao = new UsersDao();
+  MessageDao messageDao = new MessageDao();
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -27,8 +28,8 @@ public class UserPageServlet extends HttpServlet {
       page = "/ban";
     } else {
       page = "/WEB-INF/jsp/userPage.jsp";
-      MessageDao messageDao = new MessageDao();
       messageDao.setReadMessage(userName);
+      int countNewMessage = messageDao.getNewMessages(userName);
       String loginPage = "/login";
       String forumPage = "/forum";
       List<Message> messages = messageDao.loadMessage(userName);
@@ -36,29 +37,9 @@ public class UserPageServlet extends HttpServlet {
       req.setAttribute("forumPage", forumPage);
       req.setAttribute("messages", messages);
       req.setAttribute("userName", userName);
+      req.setAttribute("countNewMessage", countNewMessage);
     }
     req.getRequestDispatcher(page).forward(req, resp);
-  }
-
-  private void viewPage(HttpServletResponse resp, String userName) throws IOException {
-    //MessageDao messageDao = new MessageDao();
-    // PrintWriter out = resp.getWriter();
-    //messageDao.setReadMessage(userName);
-    //List<Message> messages = messageDao.loadMessage(userName);
-    // out.println("<html><body>");
-    // out.print("<h1>" + userName + ", your private messages: </h1>");
-    // out.print("<ul>");
-    // for (Message message : messages) {
-    //  out.print("<li>");
-    // out.print("<b>" + message.getFromUser() + " wrote: </b>");
-    //  out.print("<p>" + message.getText() + "<br>");
-    // out.print("</li>");
-    // }
-    // out.print("</ul>");
-    // out.println("<form action=\"/forum\" method=\"GET\">");
-    // out.println("<p><input type=\"submit\" value=\"Back to main page\">");
-    // out.println("</form>");
-    // out.print("</body></html>");
   }
 
   private String getUserName(HttpServletRequest req) throws IOException, ServletException {
