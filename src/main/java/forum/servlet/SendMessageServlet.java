@@ -22,16 +22,16 @@ public class SendMessageServlet extends HttpServlet{
     String userName = getUserName(req);
     String page;
     if (userName == null){
-      page = "/login";
+      page = "/FORUM/login";
     } else if (usersDao.getUserbyLogin(userName).isBan()) {
-      page = "/ban";
+      page = "/FORUM/ban";
     } else {
       page = "/WEB-INF/jsp/sendMsg.jsp";
-      String loginPage = "/login";
+      String loginPage = "/FORUM/login";
       String actionUser = getUserForSend(req);
       int newMsg = messageDao.getNewMessages(userName);
-      String link = "/message/" + getUserForSend(req);
-      String returnLink = "/forum";
+      String link = "/FORUM/message/" + getUserForSend(req);
+      String returnLink = "/FORUM/forum";
       req.setAttribute("userName", userName);
       req.setAttribute("countNewMessage", newMsg);
       req.setAttribute("actionUser", actionUser);
@@ -51,8 +51,8 @@ public class SendMessageServlet extends HttpServlet{
     String toUser = getUserForSend(req);
     Message message = new Message(fromUser,toUser,text);
     messageDao.insertMessage(message);
-    String loginPage = "/login";
-    String returnLink = "/forum";
+    String loginPage = "/FORUM/login";
+    String returnLink = "/FORUM/forum";
     req.setAttribute("returnLink", returnLink);
     req.setAttribute("loginPage",loginPage);
     req.setAttribute("userName", fromUser);

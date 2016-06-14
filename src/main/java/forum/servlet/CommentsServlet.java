@@ -31,18 +31,18 @@ public class CommentsServlet extends HttpServlet {
     String page;
     int topicId = getId(req);
     if (userName == null){
-      page = "/login";
+      page = "/FORUM/login";
     } else if (usersDao.getUserbyLogin(userName).isBan()) {
-      page = "/ban";
+      page = "/FORUM/ban";
     } else {
       page = "/WEB-INF/jsp/comments.jsp";
-      String loginPage = "/login";
-      String forumPage = "/forum";
+      String loginPage = "/FORUM/login";
+      String forumPage = "/FORUM/forum";
 
       int countNewMessage = messageDao.getNewMessages(userName);
       Map<Integer, Topic> topics = topicDao.loadTopic();
       List<Comment> comments = commentsDao.loadComment(topicId);
-      String link = "/message/";
+      String link = "/FORUM/message/";
       Topic topic = topics.get(topicId);
       //req.setAttribute("topicId", topicId);
       req.setAttribute("loginPage", loginPage);
@@ -68,7 +68,7 @@ public class CommentsServlet extends HttpServlet {
     int topicId = getId(req);
     String userName = getUserName(req);
     commentsDao.insertComment(topicId, new Comment(text, userName));
-    resp.sendRedirect("/forum/" + topicId);
+    resp.sendRedirect("/FORUM/forum/" + topicId);
   }
 
   private String getUserName(HttpServletRequest req) throws IOException, ServletException {

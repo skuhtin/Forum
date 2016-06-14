@@ -25,8 +25,8 @@ public class LoginServlet extends HttpServlet{
     String password = req.getParameter("password");
     String page = null;
     if (usersDao.userIsAbsent(login,password)) {
-      page = "/ban";
-    } else page = "/forum";
+      page = "/FORUM/ban";
+    } else page = "/FORUM/forum";
     Cookie cookieLog = new Cookie("login", login);
     resp.addCookie(cookieLog);
     resp.sendRedirect(page);

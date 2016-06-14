@@ -30,9 +30,9 @@ public class AdminPageServlet extends HttpServlet {
     }
     String page;
     if (userName == null) {
-      page = "/login";
+      page = "/FORUM/login";
     } else if (usersDao.getUserbyLogin(userName).isBan()) {
-      page = "/ban";
+      page = "/FORUM/ban";
     } else if (usersDao.getUserbyLogin(actionUser) == null) {
       sidebarAttributes(req);
       page = "/WEB-INF/jsp/errorUser.jsp";
@@ -79,8 +79,8 @@ public class AdminPageServlet extends HttpServlet {
 
   private void sidebarAttributes(HttpServletRequest req) {
     List<User> users = usersDao.getBannedUser();
-    String topicPage = "/forum";
-    String loginPage = "/login";
+    String topicPage = "/FORUM/forum";
+    String loginPage = "/FORUM/login";
     req.setAttribute("topicPage", topicPage);
     req.setAttribute("loginPage", loginPage);
     req.setAttribute("users", users);

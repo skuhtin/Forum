@@ -6,70 +6,36 @@ body {
     text-align: center;
 }
 
-.myCenter {
-    height: 45%;
-    overflow: scroll;
-    background-color: #FFEE8C;
+.form-signin {
+    max-width: 330px;
+    padding: 15px;
+    margin: 0 auto;
+}
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+    margin-bottom: 10px;
+}
+.form-signin .checkbox {
+    font-weight: normal;
+}
+.form-signin .form-control {
+    position: relative;
+    height: auto;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 10px;
     font-size: 16px;
 }
-
-.myCenter h1 {
-    text-align: center;
-    color: brown;
-    font-family: cursive;
+.form-signin .form-control:focus {
+    z-index: 2;
 }
-
-.header {
-    padding: 32px;
-    height: 23%;
-    color: inherit;
-    font-family: cursive;
-    background-color: #FFEE8C;
+.form-signin input[type="email"] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
 }
-.header h1,
-.header .h1 {
-    color: inherit;
+.form-signin input[type="password"] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
 }
-
-.myCommon {
-    background-color: #FFEE8C;
-    height: 35%;
-}
-.myReadTopic {
-    height: 27%;
-    overflow: scroll;
-    background-color: #FFEE8C;
-}
-
-.myReadTopic h1 {
-    text-align: center;
-    color: brown;
-    font-family: cursive;
-}
-.headerComment {
-    padding: 40px;
-    height: 20%;
-    color: inherit;
-    font-family: cursive;
-    background-color: #FFEE8C;
-    text-align: center;
-}
-.myComment {
-    height: 32%;
-    overflow: scroll;
-    background-color: #FFEE8C;
-}
-.Msg {
-    padding: 40px;
-    height: 100%;
-    color: inherit;
-    font-family: cursive;
-    background-color: #FFEE8C;
-    text-align: center;
-    left: auto;
-    font-size: 16px;
-}
-.head{
-    padding: 40px;
-}
-

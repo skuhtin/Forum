@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Topic list</title>
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
-    <link rel="stylesheet" href="/css/simple-sidebar.css">
-    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/FORUM/css/style.css">
+    <link rel="stylesheet" href="/FORUM/css/simple-sidebar.css">
+    <link rel="stylesheet" href="/FORUM/css/bootstrap.css">
 </head>
 <body>
 <nav class="navbar navbar-dark bg-inverse navbar-fixed-top">

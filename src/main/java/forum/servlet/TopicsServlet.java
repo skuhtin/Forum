@@ -21,12 +21,12 @@ public class TopicsServlet extends HttpServlet {
   public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     String userName = getUserName(req);
     String page;
-    String forumPage = "/forum";
-    String loginPage = "/login";
+    String forumPage = "/FORUM/forum";
+    String loginPage = "/FORUM/login";
     if (userName == null){
-      page = "/login";
+      page = "/FORUM/login";
     } else if (usersDao.getUserbyLogin(userName).isBan()) {
-      page = "/ban";
+      page = "/FORUM/ban";
     }else {
       page = "/WEB-INF/jsp/topic.jsp";
       User user = usersDao.getUserbyLogin(userName);
@@ -68,6 +68,6 @@ public class TopicsServlet extends HttpServlet {
     String userName = getUserName(req);
     Topic topic = new Topic(newHeadOfTopic, newBodyOfTopic, userName);
     topicDao.insertTopic(topic);
-    resp.sendRedirect("/forum");
+    resp.sendRedirect("/FORUM/forum");
   }
 }

@@ -23,15 +23,15 @@ public class UserPageServlet extends HttpServlet {
     String userName = getUserName(req);
     String page = null;
     if (userName == null) {
-      page = "/login";
+      page = "/FORUM/login";
     } else if (usersDao.getUserbyLogin(userName).isBan()) {
-      page = "/ban";
+      page = "/FORUM/ban";
     } else {
       page = "/WEB-INF/jsp/userPage.jsp";
       messageDao.setReadMessage(userName);
       int countNewMessage = messageDao.getNewMessages(userName);
-      String loginPage = "/login";
-      String forumPage = "/forum";
+      String loginPage = "/FORUM/login";
+      String forumPage = "/FORUM/forum";
       List<Message> messages = messageDao.loadMessage(userName);
       req.setAttribute("loginPage", loginPage);
       req.setAttribute("forumPage", forumPage);

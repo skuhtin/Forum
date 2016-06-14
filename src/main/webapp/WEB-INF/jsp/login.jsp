@@ -5,8 +5,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Authentication form</title>
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
-    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/FORUM/css/style.css">
+    <link rel="stylesheet" href="/FORUM/css/bootstrap.css">
 
 </head>
 <body>
@@ -15,13 +15,13 @@
     <div class="container">
         <ul class="nav navbar-nav">
             <li class="nav-item">
-                <form action="/ban" method="get" role="form">
+                <form action="/FORUM/ban" method="get" role="form">
                     <button type="submit" class="btn btn-primary">Press for
                         registration &raquo;</button>
                 </form>
             </li>
             <li class="nav-item form-inline pull-lg-right">
-                <form action="/login" method="post" role="form">
+                <form action="/FORUM/login" method="post" role="form">
                     <div class="form-group">
                         <input type="text" name="login" placeholder="Login" class="form-control">
                         <input type="password" name="password" placeholder="Password"

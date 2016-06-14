@@ -4,16 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Topic list</title>
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
-    <link rel="stylesheet" href="/css/simple-sidebar.css">
-    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/FORUM/css/style.css">
+    <link rel="stylesheet" href="/FORUM/css/simple-sidebar.css">
+    <link rel="stylesheet" href="/FORUM/css/bootstrap.css">
 </head>
 <body>
 <nav class="navbar navbar-dark bg-inverse navbar-fixed-top">
     <div class="container">
         <ul class="nav navbar-nav">
             <li class="nav-item">
-                <a href="/user/${userName}">${userName}'s page (${countNewMessage} new
+                <a href="/FORUM/user/${userName}">${userName}'s page (${countNewMessage} new
                     messages)</a>
             </li>
             <li class="nav-item pull-lg-right">
@@ -31,7 +31,7 @@
             </li>
             <c:forEach var="user" items="${users}">
                 <li>
-                    <a href="/admin/${user.getLogin()}">${user.getLogin()}</a>
+                    <a href="/FORUM/admin/${user.getLogin()}">${user.getLogin()}</a>
                 </li>
             </c:forEach>
         </ul>
@@ -42,7 +42,7 @@
         <div class="text-lg-center">
             <h1>What do you think about user ${actionUser}?</h1>
             <p>
-            <form action="/admin/${actionUser}" method="post">
+            <form action="/FORUM/admin/${actionUser}" method="post">
                 <select name="action" size="1"
                         style="background-color: wheat; border-color: wheat">
                     <option value="${actionBun}">${actionBun}</option>
