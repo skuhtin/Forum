@@ -72,6 +72,15 @@
         <servlet-name>admin</servlet-name>
         <url-pattern>/admin/*</url-pattern>
     </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>aboutMe</servlet-name>
+        <servlet-class>forum.servlet.AboutMe</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>aboutMe</servlet-name>
+        <url-pattern>/aboutMe</url-pattern>
+    </servlet-mapping>
 
 
 </web-app>

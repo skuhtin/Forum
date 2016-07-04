@@ -41,8 +41,8 @@
 
             <h3 class="text-danger">login/pas : admin/admin - for test admin's privilege</h3>
 
-            <form action="#" method="get" role="form">
-                <button type="submit" class="btn btn-primary">About me :)</button>
+            <form action="/FORUM/aboutMe" method="get" role="form">
+                <button type="submit" class="btn btn-primary">About me</button>
             </form>
         </div>
     </div>
