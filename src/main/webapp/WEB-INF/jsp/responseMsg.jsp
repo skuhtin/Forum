@@ -25,10 +25,12 @@
     <div class="jumbotron">
         <div class="text-lg-center">
             <h2>Message has been sent successfully!</h2>
+
             <form action="${returnLink}" method="get">
                 <button type="submit" class="btn btn-primary">Back to comment's page</button>
             </form>
         </div>
     </div>
+</div>
 </body>
 </html>
