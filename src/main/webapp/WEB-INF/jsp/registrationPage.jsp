@@ -14,9 +14,9 @@
 
     <form action="/FORUM/ban" method="post">
         <div class="form-group">
-            <input type="text" name="login" placeholder="Enter your login"
+            <input type="text" name="login" required placeholder="Enter your login"
                    class="form-control">
-            <input type="password" name="password" placeholder="Enter your password"
+            <input type="password" name="password" required placeholder="Enter your password"
                    class="form-control">
             <button type="submit" name="send" class="btn btn-block btn-primary">Send</button>
             <a class="btn btn-block btn-danger" href="/FORUM/login" role="button">Back to

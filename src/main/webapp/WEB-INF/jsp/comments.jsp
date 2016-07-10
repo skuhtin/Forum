@@ -57,7 +57,7 @@
                 <form action="${topicPage}" method="post">
                     <div>
                         <h6>Add your comment:</h6>
-                        <textarea name="comment" class="form-control" cols="40" rows="3"></textarea><br>
+                        <textarea name="comment" required class="form-control" cols="40" rows="3"></textarea><br>
                     </div>
                     <div>
                         <input type="submit" class="btn btn-primary" value="Send">

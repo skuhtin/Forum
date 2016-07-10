@@ -28,7 +28,7 @@
     <button type="submit" class="btn btn-primary">Back to comment's page</button>
   </form><br>
   <form action="${link}" method="post">
-    <textarea name="message" cols="40" rows="3"></textarea>
+    <textarea name="message" required cols="40" rows="3"></textarea>
     <p><input type="submit" value="Send">
     <input type="reset" value="Clear"></p>
   </form>

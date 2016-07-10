@@ -27,7 +27,7 @@
         <c:if test="${userIsAdmin}">
             <form action="/FORUM/admin/" method="get">
                 <div class="container">
-                    <input type="text" name="actionUser" rows="1" cols="10" placeholder="User Name">
+                    <input type="text" name="actionUser" rows="1" cols="10" required placeholder="User Name">
                     <button type="submit" class="btn btn-danger">User properties</button>
                 </div>
             </form>
@@ -61,7 +61,7 @@
 
             <h3>Add new topic:</h3></p>
             <b>Head of topic:</b><br>
-            <textarea name="head" cols="40" rows="1"></textarea><br>
+            <textarea name="head" required cols="40" rows="1"></textarea><br>
             <b>Text of topic:</b><br>
             <textarea name="comment" cols="40" rows="3"></textarea><br>
 
